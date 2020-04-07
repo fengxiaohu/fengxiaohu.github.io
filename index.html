@@ -74,6 +74,85 @@
     
     
     
+    <article id="post-Leetcode-155-Min-Stack" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/07/Leetcode-155-Min-Stack/"
+    >Leetcode 155 Min Stack</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/07/Leetcode-155-Min-Stack/" class="article-date">
+  <time datetime="2020-04-07T09:03:42.000Z" itemprop="datePublished">2020-04-07</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="Leetcode-155-Min-Stack"><a href="#Leetcode-155-Min-Stack" class="headerlink" title="Leetcode 155 Min Stack"></a>Leetcode 155 Min Stack</h1><h2 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h2><p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
+<ul>
+<li>push(x) – Push element x onto stack.</li>
+<li>pop() – Removes the element on top of the stack.</li>
+<li>top() – Get the top element.</li>
+<li>getMin() – Retrieve the minimum element in the stack.</li>
+</ul>
+<p>根据题目可以看出，要求在常数时间内拿到栈中最小元素的值。那么在栈内排序的思路就行不通了，需要采用额外的空间来降低时间复杂度，可以再申请一个辅助栈，栈顶用来存储最小的元素值。</p>
+<h2 id="方法一：辅助栈与数据栈保持同步"><a href="#方法一：辅助栈与数据栈保持同步" class="headerlink" title="方法一：辅助栈与数据栈保持同步"></a>方法一：辅助栈与数据栈保持同步</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Method 1: stack helper synchronize with stack data</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.data = []</span><br><span class="line">        self.helper = []        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type x: int</span></span><br><span class="line"><span class="string">        :rtype: None</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.data.append(x)</span><br><span class="line">        <span class="keyword">if</span> len(self.helper)==<span class="number">0</span> <span class="keyword">or</span> x&lt;=self.helper[<span class="number">-1</span>]:</span><br><span class="line">            self.helper.append(x)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.helper.append(self.helper[<span class="number">-1</span>])<span class="comment"># To keep the sychronization,we must append the duplicate element  </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: None</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.data:</span><br><span class="line">            self.helper.pop()</span><br><span class="line">            <span class="keyword">return</span> self.helper.pop()</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.data:</span><br><span class="line">            <span class="keyword">return</span> self.data[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.helper:</span><br><span class="line">            <span class="keyword">return</span> self.helper[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="时间复杂度："><a href="#时间复杂度：" class="headerlink" title="时间复杂度："></a>时间复杂度：</h3><p>O(1)，“pop”、“top”、“Getmin”的操作不论数据规模多大，都只是有限个步骤，因此时间复杂度是：O(1)。</p>
+<h3 id="空间复杂度：O-N"><a href="#空间复杂度：O-N" class="headerlink" title="空间复杂度：O(N)"></a>空间复杂度：O(N)</h3><p>这里 N是读出的数据的个数。</p>
+<h2 id="方法二：辅助栈与数据栈不保持同步"><a href="#方法二：辅助栈与数据栈不保持同步" class="headerlink" title="方法二：辅助栈与数据栈不保持同步"></a>方法二：辅助栈与数据栈不保持同步</h2><p>入栈元素仅比辅助栈顶元素小的时候，压入辅助栈，同样，出栈的时候只有栈顶元素相同时才弹出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Method 2: stack helper do not synchronize with stack data</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        initialize your data structure here.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.data = []</span><br><span class="line">        self.helper = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type x: int</span></span><br><span class="line"><span class="string">        :rtype: None</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.data.append(x)</span><br><span class="line">        <span class="keyword">if</span> len(self.helper)==<span class="number">0</span> <span class="keyword">or</span> x&lt;=self.helper[<span class="number">-1</span>]:</span><br><span class="line">            self.helper.append(x)</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: None</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        top = self.data.pop()</span><br><span class="line">        <span class="keyword">if</span> self.helper  <span class="keyword">and</span> top==self.helper[<span class="number">-1</span>]:<span class="comment"># Poping the element Only the data stack's element equals to helper stack's element</span></span><br><span class="line">            self.helper.pop()</span><br><span class="line">        <span class="keyword">return</span> top </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.data:</span><br><span class="line">            <span class="keyword">return</span> self.data[<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :rtype: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> self.helper:</span><br><span class="line">            <span class="keyword">return</span> self.helper[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+<p>相比较于出入栈都要保持严格同步的方法，方法二会节省一部分辅助栈的空间开销</p>
+<h3 id="时间复杂度O-1"><a href="#时间复杂度O-1" class="headerlink" title="时间复杂度O(1)"></a>时间复杂度O(1)</h3><h3 id="空间复杂度O-n"><a href="#空间复杂度O-n" class="headerlink" title="空间复杂度O(n)"></a>空间复杂度O(n)</h3>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-Leetcode-141-Linked-list-cycle" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
