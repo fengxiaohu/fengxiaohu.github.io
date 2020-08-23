@@ -74,6 +74,96 @@
     
     
     
+    <article id="post-Operating-System" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/08/23/Operating-System/"
+    >Operating-System</a> 
+</h2>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/08/23/Operating-System/" class="article-date">
+  <time datetime="2020-08-23T15:06:18.355Z" itemprop="datePublished">2020-08-23</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <h1 id="Operating-System"><a href="#Operating-System" class="headerlink" title="Operating System"></a>Operating System</h1><h1 id="操作系统概述"><a href="#操作系统概述" class="headerlink" title="操作系统概述"></a>操作系统概述</h1><h2 id="操作系统设计的三个目标："><a href="#操作系统设计的三个目标：" class="headerlink" title="操作系统设计的三个目标："></a>操作系统设计的三个目标：</h2><ul>
+<li>便利性</li>
+<li>有效性</li>
+<li>扩展能力</li>
+</ul>
+<h3 id="操作系统运行时有哪两种模式："><a href="#操作系统运行时有哪两种模式：" class="headerlink" title="操作系统运行时有哪两种模式："></a>操作系统运行时有哪两种模式：</h3><ul>
+<li><p>作为硬件层与应用层之间的一个接口，也就是通常意义上硬件与软件之间的缓冲层。</p>
+</li>
+<li><p>作为资源管理器，管理计算机资源（IO，内存，等等）</p>
+<ul>
+<li><p>Functions in the same way as ordinary computer software</p>
+</li>
+<li><p>Program, or suite of programs, executed by the processor</p>
+</li>
+<li><p>Frequently relinquishes control and must depend on the processor to allow it to regain control</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="操作系统发展"><a href="#操作系统发展" class="headerlink" title="操作系统发展"></a>操作系统发展</h2><ul>
+<li>Serial Processing 串行处理</li>
+<li>Simple Batch Systems 简单批处理</li>
+<li>Multiprogrammed Batch Systems 多道批处理系统</li>
+<li>Time Sharing Systems 分时系统</li>
+</ul>
+<h2 id="与串行处理相比，多道程序设计有哪些优势"><a href="#与串行处理相比，多道程序设计有哪些优势" class="headerlink" title="与串行处理相比，多道程序设计有哪些优势"></a>与串行处理相比，多道程序设计有哪些优势</h2><p>基于cpu执行指令的速度远远超过了I/O设备的处理速度，在程序执行的整个生命周期中，大量的时间被浪费在了等待I/O操作上。多道批处理系统通过一次将准备运行的多个job载入内存中，当一个正在执行中的job需要I/O时，可以转去执行另外一个job。这种近似于并发执行的方式大大提高了程序执行的速率。</p>
+<p>此外，由于一次将准备运行的多个job载入内存，进一步需要内存管理，同时在多个job间进行切换也需要使用调度算法。</p>
+<h2 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h2>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+  
+  
+
+  
+
+</article>
+    
     <article id="post-linear-table" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -111,44 +201,9 @@
 
       
       <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p>线性表是一系列数据元素组成的有限序列，是一种逻辑上的概念。具体实现方式则由数组或者是链表来实现。线性表中单个元素与其前后元素就是互相一一对应的关系。就像用一根绳子将珠子串起来。</p>
-<h2 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h2><p>使用数组来实现，分配了一段连续的地址空间来存储相应的元素。</p>
-<p>假定 [] 表示数组，那么一系列的线性表元素可以被存储在数组中，唯一需要我们注意的一点就是数组的索引是从0开始的，但是线性表的元素是从1开始的，也就是说array[0]== a1.<br>$$<br>[a_1,a_2…a_n]<br>$$</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ARRAY_SIZE = 20</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Elemtype data[ARRAY_SIZE];</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">&#125;SequentialList</span><br></pre></td></tr></table></figure>
-
-<p>然而这样做有一个最大的限制，那就是我们必须事先分配好数组的大小，在c中，静态数组一旦被创建，长度同时也就固定了下来。这与我们期望的一些实际使用线性表的场景所违背。</p>
-<p>例如我们维护一个用户输入的字符串数组，我们总是期望随着用户的输入，数组的长度能够动态增长。同样，随着用户删除一些无用数据，也能够动态地缩小。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(length&gt;(ARRAY_SIZE/<span class="number">2</span>))</span><br><span class="line">&#123;</span><br><span class="line">    SequentialList.data = (Elemtype*)<span class="built_in">malloc</span>(<span class="number">2</span>*ARRAY_SIZE);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(length&lt;(ARRAY_SIZE/<span class="number">4</span>))</span><br><span class="line">&#123;</span><br><span class="line">    SequentialList.data = (Elemtype*)<span class="built_in">malloc</span>(ARRAY_SIZE/<span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="built_in">free</span>(SequentialList.data);</span><br></pre></td></tr></table></figure>
-
-<p>上述方法通过设定数组大小的一半和1/4作为阈值来动态调控。但是我们仍然希望更加精细化的利用地址空间，做到输入一个新的元素，随即立刻分配相应的地址空间。那么就引出了我们接下来的链式存储的概念</p>
-<h3 id="顺序表基本操作"><a href="#顺序表基本操作" class="headerlink" title="顺序表基本操作"></a>顺序表基本操作</h3><p>插入操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertSeqlist</span><span class="params">(SequentialList *L,<span class="keyword">int</span> i,<span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(i&lt;<span class="number">0</span> || i&gt;L-&gt;length<span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"index is out of range"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(L-&gt;length == ARRAY_SIZE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"linear table is full"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=L-&gt;length;j&gt;i;j--)</span><br><span class="line">    &#123;</span><br><span class="line">        L.data[j]=L-&gt;data[j<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    L-&gt;data[i<span class="number">-1</span>] = val;</span><br><span class="line">    L-&gt;length++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>删除操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DelSeqlist</span><span class="params">(SequentialList *L,<span class="keyword">int</span> i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(i&lt;<span class="number">0</span> || i&gt;L-&gt;length<span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"index is out of range"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=L-&gt;length;j&gt;i;j--)</span><br><span class="line">    &#123;</span><br><span class="line">        L.data[j<span class="number">-1</span>]=L-&gt;data[j];</span><br><span class="line">    &#125;</span><br><span class="line">    L-&gt;length--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>查找</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LocateSeqList</span><span class="params">(SequentialList *L,<span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i&lt;L-&gt;length)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(L-&gt;data[i] == val)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="链式存储"><a href="#链式存储" class="headerlink" title="链式存储"></a>链式存储</h2><p>使用链表来实现。</p>
-<p>为了能够做到写入一个新的元素，立刻分配相应的空间。这就无形中要求我们的地址空间在实际的内存分布中是以离散的节点形式存在。这样在数据量较大的时候可以最大化地利用内存中的空间。</p>
-<p>随着每个元素地址空间的离散化，问题也随之而来，我们应该如何访问这些游离的元素呢？，在之前借用数组实现的方案中，由于地址空间是连续的，并且每个数组元素的大小也是固定的，因此我们只要知道数组首元素的的地址，就可以顺藤摸瓜地索引每一个元素。</p>
-<p>为了解决这个问题，我们在我们的结构体中添加了这样一个指针，它指向下一个元素的地址。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ARRAY_SIZE = 20</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Elemtype data[ARRAY_SIZE];</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">    Elemtype *next;</span><br><span class="line">&#125;LinkedList</span><br></pre></td></tr></table></figure>
-
-<p>特别地，对于每个元素仅仅只有一个数据构成的情况下，可以进一步简化为单链表</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SingleLinkedList</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">      ElemType data;   </span><br><span class="line">      <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> *<span class="title">next</span>;</span> </span><br><span class="line">  &#125;LNode</span><br></pre></td></tr></table></figure>
-
-<h3 id="单链表基本操作"><a href="#单链表基本操作" class="headerlink" title="单链表基本操作"></a>单链表基本操作</h3><h5 id="构建链表-头插法"><a href="#构建链表-头插法" class="headerlink" title="构建链表-头插法"></a>构建链表-头插法</h5><p>每次添加节点都是在头部添加，链表顺序与元素原本顺序相反。类似于栈。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SingleLinkedList</span> *<span class="title">LinkedList</span> // <span class="title">create</span> <span class="title">head</span> <span class="title">node</span></span></span><br><span class="line"><span class="class"><span class="title">LinkedList</span> = &amp;<span class="title">LNode</span>[0];</span></span><br><span class="line"><span class="function">LinkedList <span class="title">HeadInsert</span><span class="params">(LinkedList &amp;L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LNode *s</span><br><span class="line">    L = (LinkedList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">   	L-&gt;next = null;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">""</span>%d<span class="string">",&amp;x);</span></span><br><span class="line"><span class="string">    while(x!="</span>quit<span class="string">")</span></span><br><span class="line"><span class="string">          &#123;</span></span><br><span class="line"><span class="string">             s = (*Lnode)malloc(sizeof(Lnode));</span></span><br><span class="line"><span class="string">             s -&gt; data = x;</span></span><br><span class="line"><span class="string">             s -&gt; next = L -&gt;next;</span></span><br><span class="line"><span class="string">             L -&gt;next = s;</span></span><br><span class="line"><span class="string">          &#125;      </span></span><br><span class="line"><span class="string">   return L; </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="构建链表-尾插法"><a href="#构建链表-尾插法" class="headerlink" title="构建链表-尾插法"></a>构建链表-尾插法</h5><p>为了保证输入元素的数据与与链表顺序的一致性，使用一个表尾指针来进行操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SingleLinkedList</span> *<span class="title">LinkedList</span> // <span class="title">create</span> <span class="title">head</span> <span class="title">node</span></span></span><br><span class="line"><span class="class"><span class="title">LinkedList</span> = &amp;<span class="title">LNode</span>[0];</span></span><br><span class="line"><span class="function">LinkedList <span class="title">HeadInsert</span><span class="params">(LinkedList &amp;L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LNode *s</span><br><span class="line">    LNode *r </span><br><span class="line">    L = (LinkedList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">   	L-&gt;next = null;</span><br><span class="line">    *r = L;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">""</span>%d<span class="string">",&amp;x);</span></span><br><span class="line"><span class="string">    while(x!="</span>quit<span class="string">")</span></span><br><span class="line"><span class="string">          &#123;</span></span><br><span class="line"><span class="string">             s = (*Lnode)malloc(sizeof(Lnode));</span></span><br><span class="line"><span class="string">             s -&gt; data = x;</span></span><br><span class="line"><span class="string">             r -&gt; next = s;</span></span><br><span class="line"><span class="string">             r = s;</span></span><br><span class="line"><span class="string">          &#125;      </span></span><br><span class="line"><span class="string">   return L; </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="查找链表节点"><a href="#查找链表节点" class="headerlink" title="查找链表节点"></a>查找链表节点</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">LNode *GetElem(LinkedList L,int i)</span><br><span class="line">&#123;</span><br><span class="line">	int j&#x3D;1;</span><br><span class="line">	LNode *p &#x3D; L-&gt;next;</span><br><span class="line">	if(i&#x3D;&#x3D;0)</span><br><span class="line">	&#123;</span><br><span class="line">		return L;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+      
+      <a class="article-more-link" href="/2020/07/22/linear-table/">阅读更多...</a>
+      
       
       <!-- reward -->
       
@@ -215,7 +270,8 @@
       
 
       
-      <h1 id="c程序的编译过程"><a href="#c程序的编译过程" class="headerlink" title="c程序的编译过程"></a>c程序的编译过程</h1><h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>计算机语言可以分为机器语言，汇编语言，高级语言三种</p>
+      <h1 id="c程序的编译过程"><a href="#c程序的编译过程" class="headerlink" title="c程序的编译过程"></a>c程序的编译过程</h1><p>[TOC]</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>计算机语言可以分为机器语言，汇编语言，高级语言三种</p>
 <ul>
 <li>机器语言：顾名思义，机器语言是一系列二进制所组成的文件。可以直接被硬件所执行。</li>
 <li>汇编语言 汇编语言是处于机器语言与高级语言中间的一层。他的抽象程度比机器语言高，但是却比高级语言要低。</li>
@@ -290,7 +346,8 @@
       
 
       
-      <h1 id="Leetcode-169-Majority-Element"><a href="#Leetcode-169-Majority-Element" class="headerlink" title="Leetcode 169-Majority-Element"></a>Leetcode 169-Majority-Element</h1><h2 id="description"><a href="#description" class="headerlink" title="description"></a>description</h2><p>Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.</p>
+      <p>[TOC]</p>
+<h1 id="Leetcode-169-Majority-Element"><a href="#Leetcode-169-Majority-Element" class="headerlink" title="Leetcode 169-Majority-Element"></a>Leetcode 169-Majority-Element</h1><h2 id="description"><a href="#description" class="headerlink" title="description"></a>description</h2><p>Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.</p>
 <p>You may assume that the array is non-empty and the majority element always exist in the array.</p>
 <p>题目目的就是在数组中找出出现频率最大的元素</p>
       

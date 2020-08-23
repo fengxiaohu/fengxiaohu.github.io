@@ -98,6 +98,8 @@
 
       
       <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p>线性表是一系列数据元素组成的有限序列，是一种逻辑上的概念。具体实现方式则由数组或者是链表来实现。线性表中单个元素与其前后元素就是互相一一对应的关系。就像用一根绳子将珠子串起来。</p>
+<a id="more"></a>
+
 <h2 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h2><p>使用数组来实现，分配了一段连续的地址空间来存储相应的元素。</p>
 <p>假定 [] 表示数组，那么一系列的线性表元素可以被存储在数组中，唯一需要我们注意的一点就是数组的索引是从0开始的，但是线性表的元素是从1开始的，也就是说array[0]== a1.<br>$$<br>[a_1,a_2…a_n]<br>$$</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ARRAY_SIZE = 20</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Elemtype data[ARRAY_SIZE];</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">&#125;SequentialList</span><br></pre></td></tr></table></figure>
@@ -125,7 +127,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ARRAY_SIZE = 20</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	Elemtype data[ARRAY_SIZE];</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">    Elemtype *next;</span><br><span class="line">&#125;LinkedList</span><br></pre></td></tr></table></figure>
 
 <p>特别地，对于每个元素仅仅只有一个数据构成的情况下，可以进一步简化为单链表</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SingleLinkedList</span></span></span><br><span class="line"><span class="class">  &#123;</span></span><br><span class="line">      ElemType data;   </span><br><span class="line">      <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> *<span class="title">next</span>;</span> </span><br><span class="line">  &#125;LNode</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span> </span><br><span class="line">    <span class="keyword">int</span> data; </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">next</span>;</span> </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <h3 id="单链表基本操作"><a href="#单链表基本操作" class="headerlink" title="单链表基本操作"></a>单链表基本操作</h3><h5 id="构建链表-头插法"><a href="#构建链表-头插法" class="headerlink" title="构建链表-头插法"></a>构建链表-头插法</h5><p>每次添加节点都是在头部添加，链表顺序与元素原本顺序相反。类似于栈。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SingleLinkedList</span> *<span class="title">LinkedList</span> // <span class="title">create</span> <span class="title">head</span> <span class="title">node</span></span></span><br><span class="line"><span class="class"><span class="title">LinkedList</span> = &amp;<span class="title">LNode</span>[0];</span></span><br><span class="line"><span class="function">LinkedList <span class="title">HeadInsert</span><span class="params">(LinkedList &amp;L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    LNode *s</span><br><span class="line">    L = (LinkedList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">   	L-&gt;next = null;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">""</span>%d<span class="string">",&amp;x);</span></span><br><span class="line"><span class="string">    while(x!="</span>quit<span class="string">")</span></span><br><span class="line"><span class="string">          &#123;</span></span><br><span class="line"><span class="string">             s = (*Lnode)malloc(sizeof(Lnode));</span></span><br><span class="line"><span class="string">             s -&gt; data = x;</span></span><br><span class="line"><span class="string">             s -&gt; next = L -&gt;next;</span></span><br><span class="line"><span class="string">             L -&gt;next = s;</span></span><br><span class="line"><span class="string">          &#125;      </span></span><br><span class="line"><span class="string">   return L; </span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
@@ -219,6 +221,15 @@
   
   
   <nav class="article-nav">
+    
+      <a href="/2020/08/23/Operating-System/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            Operating-System
+          
+        </div>
+      </a>
     
     
       <a href="/2020/06/20/the-process-of-compile/" class="article-nav-link">
