@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">364字</span>
+            <span class="post-count">469字</span>
         </span>
     </span>
 
@@ -119,14 +119,44 @@
 </li>
 </ul>
 <h2 id="操作系统发展"><a href="#操作系统发展" class="headerlink" title="操作系统发展"></a>操作系统发展</h2><ul>
-<li>Serial Processing 串行处理</li>
-<li>Simple Batch Systems 简单批处理</li>
-<li>Multiprogrammed Batch Systems 多道批处理系统</li>
-<li>Time Sharing Systems 分时系统</li>
+<li><p>Serial Processing 串行处理</p>
+</li>
+<li><p>Simple Batch Systems 简单批处理</p>
+</li>
+<li><p>Multiprogrammed Batch Systems 多道批处理系统</p>
+</li>
+<li><p>Time Sharing Systems 分时系统</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Batch Multiprogramming</th>
+<th>Time sharing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>principal objective</td>
+<td>Maximize processor use</td>
+<td>Minimize response time</td>
+</tr>
+<tr>
+<td>Source of directives to operating system</td>
+<td>Job control language</td>
+<td>commmands entered at the termial</td>
+</tr>
+</tbody></table>
+</li>
 </ul>
 <h2 id="与串行处理相比，多道程序设计有哪些优势"><a href="#与串行处理相比，多道程序设计有哪些优势" class="headerlink" title="与串行处理相比，多道程序设计有哪些优势"></a>与串行处理相比，多道程序设计有哪些优势</h2><p>基于cpu执行指令的速度远远超过了I/O设备的处理速度，在程序执行的整个生命周期中，大量的时间被浪费在了等待I/O操作上。多道批处理系统通过一次将准备运行的多个job载入内存中，当一个正在执行中的job需要I/O时，可以转去执行另外一个job。这种近似于并发执行的方式大大提高了程序执行的速率。</p>
 <p>此外，由于一次将准备运行的多个job载入内存，进一步需要内存管理，同时在多个job间进行切换也需要使用调度算法。</p>
-<h2 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h2>
+<h2 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h2><p>一个正在执行中程序的实例。</p>
+<p>同时进程还包括了以下三个组件</p>
+<ul>
+<li>可执行程序</li>
+<li>与此可执行程序相关的数据（变量，缓冲，等）</li>
+<li>程序状态/执行上下文 process state/ execution context </li>
+</ul>
+<h2 id="操作系统是怎样使用进程的执行上下文的"><a href="#操作系统是怎样使用进程的执行上下文的" class="headerlink" title="操作系统是怎样使用进程的执行上下文的"></a>操作系统是怎样使用进程的执行上下文的</h2>
       
       <!-- reward -->
       
