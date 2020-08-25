@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.3k字</span>
+            <span class="post-count">2.4k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">8分钟</span>
+            <span class="post-count">9分钟</span>
         </span>
     </span>
 </div>
@@ -300,9 +300,16 @@
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.9.JPG" alt></p>
 <h3 id="进程镜像由哪些元素组成"><a href="#进程镜像由哪些元素组成" class="headerlink" title="进程镜像由哪些元素组成"></a>进程镜像由哪些元素组成</h3><p>进程相关联的程序，数据，堆栈，以及属性参数构成进程镜像</p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.10.JPG" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img 3.10.JPG process mirrors %&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img 3.10.JPG process mirrors % &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="为什么需要两种模式（user-mode-kernel-mode）"><a href="#为什么需要两种模式（user-mode-kernel-mode）" class="headerlink" title="为什么需要两种模式（user mode/kernel mode）"></a>为什么需要两种模式（user mode/kernel mode）</h3>
+<h3 id="进程控制块中存放的信息"><a href="#进程控制块中存放的信息" class="headerlink" title="进程控制块中存放的信息"></a>进程控制块中存放的信息</h3><ul>
+<li>Identifies</li>
+<li>process state information</li>
+<li>process control information<br><img src="/2020/08/23/Operating-System/Operating-System%5C3.11.JPG" alt></li>
+</ul>
+<h3 id="为什么需要两种模式（user-mode-kernel-mode）"><a href="#为什么需要两种模式（user-mode-kernel-mode）" class="headerlink" title="为什么需要两种模式（user mode/kernel mode）"></a>为什么需要两种模式（user mode/kernel mode）</h3><p>为了保护操作系统，防止用户直接执行一些权限较高的指令</p>
+<p>内核模式所提供的一些功能</p>
+
       
       <!-- reward -->
       
