@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">1.2k字</span>
+            <span class="post-count">2k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">4分钟</span>
+            <span class="post-count">7分钟</span>
         </span>
     </span>
 </div>
@@ -153,12 +153,12 @@
 </li>
 </ul>
 <h3 id="与串行处理相比，多道程序设计有哪些优势"><a href="#与串行处理相比，多道程序设计有哪些优势" class="headerlink" title="与串行处理相比，多道程序设计有哪些优势"></a>与串行处理相比，多道程序设计有哪些优势</h3><p>基于cpu执行指令的速度远远超过了I/O设备的处理速度，在程序执行的整个生命周期中，大量的时间被浪费在了等待I/O操作上。</p>
-<p><img src="/2020/08/23/Operating-System/Operating-System%5C2.3.jpg" alt></p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C2_3.jpg" alt></p>
 <p>多道批处理系统通过一次将准备运行的多个job载入内存中，当一个正在执行中的job需要I/O时，可以转去执行另外一个job。这种近似于并发执行的方式大大提高了程序执行的速率。</p>
-<p><img src="/2020/08/23/Operating-System/Operating-System%5C2.4.jpg" alt></p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C2_4.jpg" alt></p>
 <p>此外，由于一次将准备运行的多个job载入内存，进一步需要内存管理，同时在多个job间进行切换也需要使用调度算法。</p>
 <h3 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h3><p>一个正在执行中程序的实例。</p>
-<p><img src="/2020/08/23/Operating-System/Operating-System%5C2.5.jpg" alt></p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C2_5.jpg" alt></p>
 <p>同时进程还包括了以下三个组件</p>
 <ul>
 <li>可执行程序</li>
@@ -210,12 +210,69 @@
 <p>a single application into multiple threads, the programmer has great control</p>
 <p>over the modularity of the application and the timing of application-related</p>
 <p>events.</p>
-<p><img src="/2020/08/23/Operating-System/Operating-System%5C2.6.jpg" alt></p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C2_6.jpg" alt></p>
 <p>多线程技术面对的是同时运行许多互相独立的应用的场景。典型的例子如数据库。</p>
 <h2 id="进程描述与控制"><a href="#进程描述与控制" class="headerlink" title="进程描述与控制"></a>进程描述与控制</h2><h3 id="什么是进程的轨迹（trace）"><a href="#什么是进程的轨迹（trace）" class="headerlink" title="什么是进程的轨迹（trace）"></a>什么是进程的轨迹（trace）</h3><p>将单个进程的执行抽象为一系列的二进制的指令，这样我们就可以直观地从地址的变化上观察程序的执行。</p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.2.jpg" alt></p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.3.jpg" alt></p>
-<h3 id="基于下图简单描述五个状态"><a href="#基于下图简单描述五个状态" class="headerlink" title="基于下图简单描述五个状态"></a>基于下图简单描述五个状态</h3><p><img src="/2020/08/23/Operating-System/Operating-System%5C3.4.jpg" alt></p>
+<h3 id="基于下图简单描述五个状态"><a href="#基于下图简单描述五个状态" class="headerlink" title="基于下图简单描述五个状态"></a>基于下图简单描述五个状态</h3><p><img src="/2020/08/23/Operating-System/Operating-System%5C3.4.jpg" alt="图3.4五状态模型"></p>
+<ul>
+<li><p>running 进程正在被执行</p>
+</li>
+<li><p>Ready 进程已经准备好，将要被调度器执行</p>
+</li>
+<li><p>Blocked 进程在某些事件执行完成之前都不能被执行.eg:等待I/O的完成</p>
+</li>
+<li><p>New 进程刚刚被OS创建，还未加载入内存中</p>
+</li>
+<li><p>结束态 进程结束，所占用的系统资源被释放</p>
+</li>
+</ul>
+<h3 id="五个状态之间的相互转换"><a href="#五个状态之间的相互转换" class="headerlink" title="五个状态之间的相互转换"></a>五个状态之间的相互转换</h3><ul>
+<li><p>null -&gt; new 一个新的进程被创建</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.5.jpg" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>new-&gt; Ready 当OS准备一个新进程的执行命令时，它会将相应的进程从new转换为ready</p>
+</li>
+<li><p>Ready-&gt; Running: 处理器处于空闲状态时，调度器选择一个Ready状态的进程去运行</p>
+</li>
+<li><p>Running-&gt;exit: 当进程结束或者时被OS撤销时，进入exit。通常来说可能因为以下原因进入到exit状态</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.6.JPG" alt></p>
+</li>
+<li><p>Running-&gt;ready</p>
+<p>进程由于耗尽时间片（Time slice）而进入ready状态，通常由于优先级高于此进程的其他进程抢占此进程的执行权，致使其进入ready状态</p>
+<p>Time slice：The period of time for which a process is allowed to run in a preemptive multitasking system is generally called the <em>time slice</em> or <em>quantum</em>. The scheduler is run once every time slice to choose the next process to run. The length of each time slice can be critical to balancing system performance vs process responsiveness - if the time slice is too short then the scheduler will consume too much processing time, but if the time slice is too long, processes will take longer to respond to input.</p>
+</li>
+<li><p>Running-&gt;Blocked</p>
+<p>在执行过程中由于进程本身发出请求，等待回应而不得不暂时中断执行。最常见的情况是此进程在执行过程中发出了I/O请求，在前面提到过，I/O请求的时间远远超过了cpu的执行时间，如果CPU原地等待中断执行完成的话，时间上会造成极大的浪费。</p>
+</li>
+<li><p>Blocked-&gt; Ready </p>
+<p>进程所等待的事件出现</p>
+</li>
+</ul>
+<h3 id="抢占一个进程意味着什么"><a href="#抢占一个进程意味着什么" class="headerlink" title="抢占一个进程意味着什么"></a>抢占一个进程意味着什么</h3><p>假设A为一个正在运行的进程，B为优先级高于A，处于Blocked的状态。在A正在运行的时候，B所等待的事件到达。调度器中断A的执行，转而去执行B。这就意味着进程B抢占了进程A。</p>
+<h3 id="进程繁殖"><a href="#进程繁殖" class="headerlink" title="进程繁殖"></a>进程繁殖</h3><p>一个进程在执行中创建了新的子进程。</p>
+<h3 id="为什么下图有两个阻塞态"><a href="#为什么下图有两个阻塞态" class="headerlink" title="为什么下图有两个阻塞态"></a>为什么下图有两个阻塞态</h3><p><img src="/2020/08/23/Operating-System/Operating-System%5C3.7.JPG" alt></p>
+<ul>
+<li><p>suspend的出现</p>
+<p>考虑一个没有虚拟内存支持的系统，状态数目如上面的5状态图中，不存在suspend状态。那么所有running 和blocked 的状态都会被全部载入内存中。内存空间的容量会大大限制并发的进程数量，降低系统的运行速度</p>
+</li>
+<li><p>CPU idle</p>
+<p>由于CPU的运行速率要比内存快上三个数量级，纵然内存载入许多进程，达到了所能容纳数量的上限，那么仍然会因为载入的所有进程都进入block状态，使得CPU闲置下来。</p>
+</li>
+<li><p>解决方案</p>
+<ol>
+<li><p>增加内存容量 </p>
+<p>内存价格过于昂贵，且内存价格并不是随着容量线性增长，在后期一点点内存容量的提升都会引起价格的大幅度上涨。</p>
+</li>
+<li><p>虚拟存储技术（swapping）</p>
+<p>将进程的一部分或者是整个进程从内存交换到硬盘。当系统中所有进程都进入blocked状态，OS将其中一个进程标记为suspend状态并内存将它交换到磁盘，同时内存有新的空间来调度新的进程。</p>
+</li>
+</ol>
+</li>
+</ul>
 
       
       <!-- reward -->
