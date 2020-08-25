@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2k字</span>
+            <span class="post-count">2.3k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">7分钟</span>
+            <span class="post-count">8分钟</span>
         </span>
     </span>
 </div>
@@ -272,8 +272,34 @@
 </li>
 </ol>
 </li>
+<li><p>增加一个新的block状态，命名为suspend。考虑到进程是否等待某个事件（是否阻塞）与进程是否被换出内存（是否挂起），那么互相组合之后就会有4种新的状态，自然也就新增加了两个阻塞态</p>
+<ul>
+<li>blocked suspended</li>
+<li>blocked unsuspended</li>
+<li>unblocked unsuspended</li>
+<li>unblocked suspended<h3 id="列出挂起进程的四个状态"><a href="#列出挂起进程的四个状态" class="headerlink" title="列出挂起进程的四个状态"></a>列出挂起进程的四个状态</h3></li>
 </ul>
-
+</li>
+<li><p>进程不能被立即调入执行</p>
+</li>
+<li><p>进程可能在等待事件发生</p>
+</li>
+<li><p>进程可以被它的父进程，OS，或者自己置为挂起态</p>
+</li>
+<li><p>挂起状态不能被移除，只有等到收到将此进程挂起的实体的信号才可以解除挂起</p>
+</li>
+</ul>
+<p>下面是挂起的原因</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.8.JPG" alt></p>
+<h3 id="操作系统维护哪些状态表来对哪些类型的实体进行管理"><a href="#操作系统维护哪些状态表来对哪些类型的实体进行管理" class="headerlink" title="操作系统维护哪些状态表来对哪些类型的实体进行管理"></a>操作系统维护哪些状态表来对哪些类型的实体进行管理</h3><ul>
+<li>Memory Tables 记录物理内存与虚拟内存的使用状态</li>
+<li>I/O tables   管理I/O 设备</li>
+<li>file tables </li>
+<li>process tables</li>
+</ul>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.9.JPG" alt></p>
+<h3 id="进程镜像由哪些元素组成"><a href="#进程镜像由哪些元素组成" class="headerlink" title="进程镜像由哪些元素组成"></a>进程镜像由哪些元素组成</h3><p>进程相关联的程序，数据，堆栈，以及属性参数构成进程镜像</p>
+<h3 id="为什么需要两种模式（user-mode-kernel-mode）"><a href="#为什么需要两种模式（user-mode-kernel-mode）" class="headerlink" title="为什么需要两种模式（user mode/kernel mode）"></a>为什么需要两种模式（user mode/kernel mode）</h3>
       
       <!-- reward -->
       
