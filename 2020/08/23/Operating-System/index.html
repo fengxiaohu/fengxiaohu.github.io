@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">2.4k字</span>
+            <span class="post-count">4.5k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">9分钟</span>
+            <span class="post-count">16分钟</span>
         </span>
     </span>
 </div>
@@ -309,6 +309,167 @@
 </ul>
 <h3 id="为什么需要两种模式（user-mode-kernel-mode）"><a href="#为什么需要两种模式（user-mode-kernel-mode）" class="headerlink" title="为什么需要两种模式（user mode/kernel mode）"></a>为什么需要两种模式（user mode/kernel mode）</h3><p>为了保护操作系统，防止用户直接执行一些权限较高的指令</p>
 <p>内核模式所提供的一些功能</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.12.JPG" alt></p>
+<h3 id="操作系统与用户进程的关联"><a href="#操作系统与用户进程的关联" class="headerlink" title="操作系统与用户进程的关联"></a>操作系统与用户进程的关联</h3><ul>
+<li>独立内核</li>
+<li>嵌套在用户进程中</li>
+<li>基于进程的操作系统</li>
+</ul>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.13.JPG" alt></p>
+<h3 id="操作系统创建新的进程有哪些步骤"><a href="#操作系统创建新的进程有哪些步骤" class="headerlink" title="操作系统创建新的进程有哪些步骤"></a>操作系统创建新的进程有哪些步骤</h3><ul>
+<li><p>为进程分配一个独一无二的标识符</p>
+</li>
+<li><p>为进程分配空间</p>
+</li>
+<li><p>初始化进程控制块</p>
+</li>
+<li><p>设置指针，为了方便通过链表操作加入到相应的ready 或者blocked的队列中</p>
+</li>
+<li><p>创建与扩充其他数据结构</p>
+</li>
+</ul>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.15.JPG" alt></p>
+<h3 id="基于进程的操作系统有哪些优点"><a href="#基于进程的操作系统有哪些优点" class="headerlink" title="基于进程的操作系统有哪些优点"></a>基于进程的操作系统有哪些优点</h3><ul>
+<li>设计更加模块化</li>
+<li>各个模块之间的接口定义十分清晰</li>
+<li>操作系统一些非核心功能可以很方便的以独立的进程运行，在多核系统或者多个计算机组成的集群中有明显优势</li>
+</ul>
+<h3 id="中断与异常有哪些区别"><a href="#中断与异常有哪些区别" class="headerlink" title="中断与异常有哪些区别"></a>中断与异常有哪些区别</h3><p>系统中断可以分为中断（interrupt）与异常（trap）</p>
+<p>中断由外部事件（I/O）所引起，与正在进行的程序是异步的。</p>
+<p>异常是程序本身在运行过程中发生了错误，OS会根据错误的严重程度采取将此进程转入exit状态，或者修复错误后继续执行，或者仅仅是通知用户。</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.14.JPG" alt></p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.16.JPG" alt></p>
+<h3 id="举出三个中断的例子"><a href="#举出三个中断的例子" class="headerlink" title="举出三个中断的例子"></a>举出三个中断的例子</h3><ul>
+<li><p>时钟中断</p>
+</li>
+<li><p>I/O中断</p>
+</li>
+<li><p>内存错误 进程访问了受保护的内存区域</p>
+</li>
+<li><p>时间片耗尽</p>
+</li>
+</ul>
+<h3 id="模式切换与进程切换有哪些区别"><a href="#模式切换与进程切换有哪些区别" class="headerlink" title="模式切换与进程切换有哪些区别"></a>模式切换与进程切换有哪些区别</h3><p>模式切换（mode switching）</p>
+<ul>
+<li><p>无中断</p>
+<p>进入取指阶段，取出下一条将要被执行的指令</p>
+</li>
+<li><p>存在中断</p>
+<p>将程序计数器（program counter）设置为中断程序入口</p>
+<p>从用户模式切换到内核模式，开始执行中断程序</p>
+</li>
+</ul>
+<p>进程切换（process switching）</p>
+<ul>
+<li>保存当前进程上下文</li>
+<li>改变当前正在运行的进程的进程控制块的内容。举例来说，当进程切换开始，当前进程running的状态势必因为切换而发生改变。</li>
+<li>将当前进程的控制块转移到队列中（blocking queue,ready queue）</li>
+<li>选择另外一个进程开始执行</li>
+<li>更新此进程的PCB</li>
+<li>更新内存管理模块的数据结构</li>
+<li>恢复被选中的进程上下文</li>
+</ul>
+<p>处理器的模式切换并不一定带来进程切换，进程切换的函数开销要高于模式切换</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><h3 id="表3-5列出了在一个没有线程的操作系统中进程控制块的基本元素。对于多线程系统，这些元素中那些可能属于线程控制块，那些可能属于进程控制块？"><a href="#表3-5列出了在一个没有线程的操作系统中进程控制块的基本元素。对于多线程系统，这些元素中那些可能属于线程控制块，那些可能属于进程控制块？" class="headerlink" title="表3.5列出了在一个没有线程的操作系统中进程控制块的基本元素。对于多线程系统，这些元素中那些可能属于线程控制块，那些可能属于进程控制块？"></a>表3.5列出了在一个没有线程的操作系统中进程控制块的基本元素。对于多线程系统，这些元素中那些可能属于线程控制块，那些可能属于进程控制块？</h3><p>线程：负责资源的调度最小单位 unit of dispatching</p>
+<p>进程：占有资源的最小单位  the unit of resource ownership</p>
+<ul>
+<li>进程与线程均拥有自己的标识符/ID</li>
+<li>处理器进程信息作为计算机资源的一部分，这部分信息理应出现在进程所对应的控制块中</li>
+<li>进程控制信息中的大部分与资源的调度有关，因此其中大部分应该出现在线程的控制块中<ul>
+<li>调度与状态信息出现在线程中</li>
+<li>数据结构在PCB与TCB中均可以出现</li>
+<li>进程间通信与线程间通信均可以出现</li>
+<li>内存管理出现在进程级</li>
+<li>资源占用和初始化也出现在进程级</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.11.JPG" alt></p>
+<h3 id="为什么线程间的切换开销要比进程间的小"><a href="#为什么线程间的切换开销要比进程间的小" class="headerlink" title="为什么线程间的切换开销要比进程间的小"></a>为什么线程间的切换开销要比进程间的小</h3><p>同一进程间的互相切换的时候，由于它们之间共享父进程的物理资源，共存与同一片地址空间。那么由于缓存技术的存在，切换时候的开销更小。同时线程上下文保存的信息也比进程上下文保存的信息要少。</p>
+<h3 id="在进程概念中体现出的两个独立且无关的特点是什么？"><a href="#在进程概念中体现出的两个独立且无关的特点是什么？" class="headerlink" title="在进程概念中体现出的两个独立且无关的特点是什么？"></a>在进程概念中体现出的两个独立且无关的特点是什么？</h3><ul>
+<li><p>资源占用</p>
+</li>
+<li><p>调度执行</p>
+</li>
+</ul>
+<h3 id="给出在单用户多处理系统中使用线程的四个例子。"><a href="#给出在单用户多处理系统中使用线程的四个例子。" class="headerlink" title="给出在单用户多处理系统中使用线程的四个例子。"></a>给出在单用户多处理系统中使用线程的四个例子。</h3><ul>
+<li>前端与后端 Foreground and background work</li>
+<li>异步处理 Asynchronous processing</li>
+<li>执行速度 Speed of execution</li>
+<li>模块化处理 Modular program structure</li>
+</ul>
+<h3 id="哪些资源通常被一个进程中的所有线程共享？"><a href="#哪些资源通常被一个进程中的所有线程共享？" class="headerlink" title="哪些资源通常被一个进程中的所有线程共享？"></a>哪些资源通常被一个进程中的所有线程共享？</h3><p>地址空间与文件资源</p>
+<h3 id="列出用户级线程（User-Level-thread）优于内核级线程（Kernel-level-thread）的三个优点"><a href="#列出用户级线程（User-Level-thread）优于内核级线程（Kernel-level-thread）的三个优点" class="headerlink" title="列出用户级线程（User Level thread）优于内核级线程（Kernel level thread）的三个优点"></a>列出用户级线程（User Level thread）优于内核级线程（Kernel level thread）的三个优点</h3><ul>
+<li><p>线程切换无需内核态的权限 </p>
+<p>ULT 管理现成的数据结构存在于进程的用户态地址空间，节省了模式切换的开销</p>
+</li>
+<li><p>线程调度可以由应用定制</p>
+<p>自定义线程间的调度算法，不会受限于内核级别的调度算法</p>
+</li>
+<li><p>用户级线程可以应用于任何OS之上</p>
+</li>
+</ul>
+<h3 id="列出用户级线程相对于内核级线程的两个缺点"><a href="#列出用户级线程相对于内核级线程的两个缺点" class="headerlink" title="列出用户级线程相对于内核级线程的两个缺点"></a>列出用户级线程相对于内核级线程的两个缺点</h3><ul>
+<li>如果线程频繁地调用系统调用，那么此线程所属的父进程也会阻塞，此进程其他线程也会阻塞。</li>
+<li>ULT 无法利用系统中的多处理器<h3 id="定义jacketing"><a href="#定义jacketing" class="headerlink" title="定义jacketing"></a>定义jacketing</h3></li>
+</ul>
+<p>通过将一个导致阻塞的系统调用转化为非阻塞的系统调用</p>
+<h2 id="并发：互斥（Mutual-Exclusion-）与同步（Synchronization）"><a href="#并发：互斥（Mutual-Exclusion-）与同步（Synchronization）" class="headerlink" title="并发：互斥（Mutual Exclusion ）与同步（Synchronization）"></a>并发：互斥（Mutual Exclusion ）与同步（Synchronization）</h2><h2 id><a href="#" class="headerlink" title></a></h2><h3 id="列出操作系统中与并发相关的四个设计问题"><a href="#列出操作系统中与并发相关的四个设计问题" class="headerlink" title="列出操作系统中与并发相关的四个设计问题"></a>列出操作系统中与并发相关的四个设计问题</h3><ul>
+<li><p>进程间的通信</p>
+</li>
+<li><p>资源的竞争（内存，文件，I/O）</p>
+</li>
+<li><p>多线程中活动的同步</p>
+</li>
+<li><p>进程分配时间片</p>
+</li>
+</ul>
+<h3 id="进程并发执行的三种情形"><a href="#进程并发执行的三种情形" class="headerlink" title="进程并发执行的三种情形"></a>进程并发执行的三种情形</h3><ul>
+<li>多重应用</li>
+<li>结构化的应用</li>
+<li>操作系统本身的结构</li>
+</ul>
+<h3 id="并发执行的必要条件是什么"><a href="#并发执行的必要条件是什么" class="headerlink" title="并发执行的必要条件是什么"></a>并发执行的必要条件是什么</h3><p>进程之间能并发执行的条件先决条件是支持互斥</p>
+<h3 id="列出三种进程类型之间的交互"><a href="#列出三种进程类型之间的交互" class="headerlink" title="列出三种进程类型之间的交互"></a>列出三种进程类型之间的交互</h3><ul>
+<li>进程彼此之间没有交互，互相无法意识到彼此的存在</li>
+<li>间接交互  彼此之间不能互相通信，但是因为通过共享意识到彼此存在。例如共享了缓冲区</li>
+<li>直接交互 彼此之间可以直接通过进程ID来通信</li>
+</ul>
+<h3 id="竞争进程与合作进程之间有什么区别"><a href="#竞争进程与合作进程之间有什么区别" class="headerlink" title="竞争进程与合作进程之间有什么区别"></a>竞争进程与合作进程之间有什么区别</h3><p>竞争进程的目的是为了在运行期间对资源完成独占，需要支持互斥才能实现，读写都要保证互斥。</p>
+<p>合作进程目的是为了共享某类资源，对于数据一致性有比较高的保证，只有写入操作需要保持互斥。</p>
+<h3 id="列出三个由于进程对于资源的竞争使用带来的三个问题"><a href="#列出三个由于进程对于资源的竞争使用带来的三个问题" class="headerlink" title="列出三个由于进程对于资源的竞争使用带来的三个问题"></a>列出三个由于进程对于资源的竞争使用带来的三个问题</h3><ul>
+<li>互斥 </li>
+<li>死锁</li>
+<li>饥饿</li>
+</ul>
+<h3 id="互斥所需的前置条件"><a href="#互斥所需的前置条件" class="headerlink" title="互斥所需的前置条件"></a>互斥所需的前置条件</h3><ul>
+<li>所有进程对于相同的资源都拥有同样的临界区，并且同一时间临界区只允许被一个进程访问</li>
+<li>进程在非临界区的执行不能影响其他进程。</li>
+<li>没有死锁和饥饿。所有进程都有可能访问到临界区</li>
+<li>不能对于处理器的核心数量以及进程执行速度有任何假设</li>
+<li>进程在自己临界区内执行时间是有限的</li>
+</ul>
+<h3 id="列出信号灯上可以进行的操作"><a href="#列出信号灯上可以进行的操作" class="headerlink" title="列出信号灯上可以进行的操作"></a>列出信号灯上可以进行的操作</h3><ul>
+<li><p>初始化信号灯的值为非负数</p>
+</li>
+<li><p>semWait() P 将信号灯的值减一，如果此后值为负数，那么执行semWait()的进程就被阻塞</p>
+</li>
+<li><p>semSignal() V 将信号灯的值加一，如果此后它的值小于等于0，唤醒一个由于semWait()阻塞的进程</p>
+</li>
+</ul>
+<h3 id="二值信号灯与通用信号灯有什么区别"><a href="#二值信号灯与通用信号灯有什么区别" class="headerlink" title="二值信号灯与通用信号灯有什么区别"></a>二值信号灯与通用信号灯有什么区别</h3><p>01信号灯只有0，1两个取值</p>
+<p>通用信号灯的取值范围为整数</p>
+<h3 id="强弱信号灯有什么区别"><a href="#强弱信号灯有什么区别" class="headerlink" title="强弱信号灯有什么区别"></a>强弱信号灯有什么区别</h3><p>强弱信号灯的区别在于被block的进程队列应该以何种顺序被唤醒</p>
+<p>强信号灯，队列为FIFO，唤醒顺序依照先来先唤醒</p>
+<p>弱信号灯 无特定的顺序</p>
+<h3 id="什么是管程"><a href="#什么是管程" class="headerlink" title="什么是管程"></a>什么是管程</h3><p>与信号灯提供等效的功能并且易于操作。管程可以被看作是包含了多个函数，一个初始化过程，以及本地数据的软件模块</p>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C5.4.1.JPG" alt></p>
+<h3 id="消息的阻塞与非阻塞有什么区别"><a href="#消息的阻塞与非阻塞有什么区别" class="headerlink" title="消息的阻塞与非阻塞有什么区别"></a>消息的阻塞与非阻塞有什么区别</h3><p>发送者和接收者任一方阻塞则消息传递需要等待，都无阻塞则不需等待。</p>
+<h3 id="通常与读者-写者问题相关联的有哪些条件？"><a href="#通常与读者-写者问题相关联的有哪些条件？" class="headerlink" title="通常与读者-写者问题相关联的有哪些条件？"></a>通常与读者-写者问题相关联的有哪些条件？</h3><ul>
+<li>任意多的进程可以读取数据区</li>
+<li>一次只允许有一个进程写入</li>
+<li>写入的同时不允许读取</li>
+</ul>
 
       
       <!-- reward -->
