@@ -119,7 +119,7 @@
 </li>
 </ul>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C2_1.jpg" alt></p>
-
+<img src="/2020/08/23/Operating-System/2_1.JPG" class title="computer architecture">
 
 
 
@@ -153,11 +153,17 @@
 </li>
 </ul>
 <h3 id="与串行处理相比，多道程序设计有哪些优势"><a href="#与串行处理相比，多道程序设计有哪些优势" class="headerlink" title="与串行处理相比，多道程序设计有哪些优势"></a>与串行处理相比，多道程序设计有哪些优势</h3><p>基于cpu执行指令的速度远远超过了I/O设备的处理速度，在程序执行的整个生命周期中，大量的时间被浪费在了等待I/O操作上。</p>
+<img src="/2020/08/23/Operating-System/2_3.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C2_3.jpg" alt></p>
 <p>多道批处理系统通过一次将准备运行的多个job载入内存中，当一个正在执行中的job需要I/O时，可以转去执行另外一个job。这种近似于并发执行的方式大大提高了程序执行的速率。</p>
+<img src="/2020/08/23/Operating-System/2_4.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C2_4.jpg" alt></p>
 <p>此外，由于一次将准备运行的多个job载入内存，进一步需要内存管理，同时在多个job间进行切换也需要使用调度算法。</p>
 <h3 id="什么是进程"><a href="#什么是进程" class="headerlink" title="什么是进程"></a>什么是进程</h3><p>一个正在执行中程序的实例。</p>
+
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C2_5.jpg" alt></p>
 <p>同时进程还包括了以下三个组件</p>
 <ul>
@@ -210,12 +216,20 @@
 <p>a single application into multiple threads, the programmer has great control</p>
 <p>over the modularity of the application and the timing of application-related</p>
 <p>events.</p>
+<img src="/2020/08/23/Operating-System/2_6.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C2_6.jpg" alt></p>
 <p>多线程技术面对的是同时运行许多互相独立的应用的场景。典型的例子如数据库。</p>
 <h2 id="进程描述与控制"><a href="#进程描述与控制" class="headerlink" title="进程描述与控制"></a>进程描述与控制</h2><h3 id="什么是进程的轨迹（trace）"><a href="#什么是进程的轨迹（trace）" class="headerlink" title="什么是进程的轨迹（trace）"></a>什么是进程的轨迹（trace）</h3><p>将单个进程的执行抽象为一系列的二进制的指令，这样我们就可以直观地从地址的变化上观察程序的执行。</p>
+<img src="/2020/08/23/Operating-System/3.2.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.2.jpg" alt></p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.3.jpg" alt></p>
-<h3 id="基于下图简单描述五个状态"><a href="#基于下图简单描述五个状态" class="headerlink" title="基于下图简单描述五个状态"></a>基于下图简单描述五个状态</h3><p><img src="/2020/08/23/Operating-System/Operating-System%5C3.4.jpg" alt="图3.4五状态模型"></p>
+<img src="/2020/08/23/Operating-System/3.3.JPG" class title="computer architecture">
+
+<h3 id="基于下图简单描述五个状态"><a href="#基于下图简单描述五个状态" class="headerlink" title="基于下图简单描述五个状态"></a>基于下图简单描述五个状态</h3><img src="/2020/08/23/Operating-System/3.4.JPG" class title="computer architecture">
+
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.4.jpg" alt="图3.4五状态模型"></p>
 <ul>
 <li><p>running 进程正在被执行</p>
 </li>
@@ -231,14 +245,13 @@
 <h3 id="五个状态之间的相互转换"><a href="#五个状态之间的相互转换" class="headerlink" title="五个状态之间的相互转换"></a>五个状态之间的相互转换</h3><ul>
 <li><p>null -&gt; new 一个新的进程被创建</p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.5.jpg" alt></p>
+<img src="/2020/08/23/Operating-System/3.5.jpg" class title="computer architecture">
 </li>
-</ul>
-<ul>
 <li><p>new-&gt; Ready 当OS准备一个新进程的执行命令时，它会将相应的进程从new转换为ready</p>
 </li>
 <li><p>Ready-&gt; Running: 处理器处于空闲状态时，调度器选择一个Ready状态的进程去运行</p>
 </li>
-<li><p>Running-&gt;exit: 当进程结束或者时被OS撤销时，进入exit。通常来说可能因为以下原因进入到exit状态</p>
+<li><p>Running-&gt;exit: 当进程结束或者时被OS撤销时，进入exit。通常来说可能因为以下原因进入到exit状态<img src="/2020/08/23/Operating-System/3.6.JPG" class title="computer architecture"></p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.6.JPG" alt></p>
 </li>
 <li><p>Running-&gt;ready</p>
@@ -255,6 +268,10 @@
 <h3 id="抢占一个进程意味着什么"><a href="#抢占一个进程意味着什么" class="headerlink" title="抢占一个进程意味着什么"></a>抢占一个进程意味着什么</h3><p>假设A为一个正在运行的进程，B为优先级高于A，处于Blocked的状态。在A正在运行的时候，B所等待的事件到达。调度器中断A的执行，转而去执行B。这就意味着进程B抢占了进程A。</p>
 <h3 id="进程繁殖"><a href="#进程繁殖" class="headerlink" title="进程繁殖"></a>进程繁殖</h3><p>一个进程在执行中创建了新的子进程。</p>
 <h3 id="为什么下图有两个阻塞态"><a href="#为什么下图有两个阻塞态" class="headerlink" title="为什么下图有两个阻塞态"></a>为什么下图有两个阻塞态</h3><p><img src="/2020/08/23/Operating-System/Operating-System%5C3.7.JPG" alt></p>
+<img src="/2020/08/23/Operating-System/3.7.JPG" class title="computer architecture">
+
+
+
 <ul>
 <li><p>suspend的出现</p>
 <p>考虑一个没有虚拟内存支持的系统，状态数目如上面的5状态图中，不存在suspend状态。那么所有running 和blocked 的状态都会被全部载入内存中。内存空间的容量会大大限制并发的进程数量，降低系统的运行速度</p>
@@ -290,30 +307,45 @@
 </li>
 </ul>
 <p>下面是挂起的原因</p>
+<img src="/2020/08/23/Operating-System/3.8.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.8.JPG" alt></p>
 <h3 id="操作系统维护哪些状态表来对哪些类型的实体进行管理"><a href="#操作系统维护哪些状态表来对哪些类型的实体进行管理" class="headerlink" title="操作系统维护哪些状态表来对哪些类型的实体进行管理"></a>操作系统维护哪些状态表来对哪些类型的实体进行管理</h3><ul>
-<li>Memory Tables 记录物理内存与虚拟内存的使用状态</li>
-<li>I/O tables   管理I/O 设备</li>
-<li>file tables </li>
-<li>process tables</li>
+<li><p>Memory Tables 记录物理内存与虚拟内存的使用状态</p>
+</li>
+<li><p>I/O tables   管理I/O 设备</p>
+</li>
+<li><p>file tables </p>
+</li>
+<li><p>process tables</p>
+<img src="/2020/08/23/Operating-System/3.9.JPG" class title="computer architecture">
+
+</li>
 </ul>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.9.JPG" alt></p>
 <h3 id="进程镜像由哪些元素组成"><a href="#进程镜像由哪些元素组成" class="headerlink" title="进程镜像由哪些元素组成"></a>进程镜像由哪些元素组成</h3><p>进程相关联的程序，数据，堆栈，以及属性参数构成进程镜像</p>
-<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.10.JPG" alt></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img 3.10.JPG process mirrors % &#125;</span><br></pre></td></tr></table></figure>
+<img src="/2020/08/23/Operating-System/3.10.JPG" class title="computer architecture">
 
-<h3 id="进程控制块中存放的信息"><a href="#进程控制块中存放的信息" class="headerlink" title="进程控制块中存放的信息"></a>进程控制块中存放的信息</h3><ul>
+<p><img src="/2020/08/23/Operating-System/Operating-System%5C3.10.JPG" alt>进程控制块中存放的信息</p>
+<ul>
 <li>Identifies</li>
 <li>process state information</li>
 <li>process control information<br><img src="/2020/08/23/Operating-System/Operating-System%5C3.11.JPG" alt></li>
 </ul>
 <h3 id="为什么需要两种模式（user-mode-kernel-mode）"><a href="#为什么需要两种模式（user-mode-kernel-mode）" class="headerlink" title="为什么需要两种模式（user mode/kernel mode）"></a>为什么需要两种模式（user mode/kernel mode）</h3><p>为了保护操作系统，防止用户直接执行一些权限较高的指令</p>
 <p>内核模式所提供的一些功能</p>
+<img src="/2020/08/23/Operating-System/3.12.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.12.JPG" alt></p>
 <h3 id="操作系统与用户进程的关联"><a href="#操作系统与用户进程的关联" class="headerlink" title="操作系统与用户进程的关联"></a>操作系统与用户进程的关联</h3><ul>
-<li>独立内核</li>
-<li>嵌套在用户进程中</li>
-<li>基于进程的操作系统</li>
+<li><p>独立内核</p>
+</li>
+<li><p>嵌套在用户进程中</p>
+</li>
+<li><p>基于进程的操作系统</p>
+<img src="/2020/08/23/Operating-System/3.13.JPG" class title="computer architecture">
+
+</li>
 </ul>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.13.JPG" alt></p>
 <h3 id="操作系统创建新的进程有哪些步骤"><a href="#操作系统创建新的进程有哪些步骤" class="headerlink" title="操作系统创建新的进程有哪些步骤"></a>操作系统创建新的进程有哪些步骤</h3><ul>
@@ -326,6 +358,8 @@
 <li><p>设置指针，为了方便通过链表操作加入到相应的ready 或者blocked的队列中</p>
 </li>
 <li><p>创建与扩充其他数据结构</p>
+<img src="/2020/08/23/Operating-System/3.15.JPG" class title="computer architecture">
+
 </li>
 </ul>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.15.JPG" alt></p>
@@ -337,8 +371,12 @@
 <h3 id="中断与异常有哪些区别"><a href="#中断与异常有哪些区别" class="headerlink" title="中断与异常有哪些区别"></a>中断与异常有哪些区别</h3><p>系统中断可以分为中断（interrupt）与异常（trap）</p>
 <p>中断由外部事件（I/O）所引起，与正在进行的程序是异步的。</p>
 <p>异常是程序本身在运行过程中发生了错误，OS会根据错误的严重程度采取将此进程转入exit状态，或者修复错误后继续执行，或者仅仅是通知用户。</p>
+<img src="/2020/08/23/Operating-System/3.14.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.14.JPG" alt></p>
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.16.JPG" alt></p>
+<img src="/2020/08/23/Operating-System/3.16.JPG" class title="computer architecture">
+
 <h3 id="举出三个中断的例子"><a href="#举出三个中断的例子" class="headerlink" title="举出三个中断的例子"></a>举出三个中断的例子</h3><ul>
 <li><p>时钟中断</p>
 </li>
@@ -384,6 +422,8 @@
 </ul>
 </li>
 </ul>
+
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C3.11.JPG" alt></p>
 <h3 id="为什么线程间的切换开销要比进程间的小"><a href="#为什么线程间的切换开销要比进程间的小" class="headerlink" title="为什么线程间的切换开销要比进程间的小"></a>为什么线程间的切换开销要比进程间的小</h3><p>同一进程间的互相切换的时候，由于它们之间共享父进程的物理资源，共存与同一片地址空间。那么由于缓存技术的存在，切换时候的开销更小。同时线程上下文保存的信息也比进程上下文保存的信息要少。</p>
 <h3 id="在进程概念中体现出的两个独立且无关的特点是什么？"><a href="#在进程概念中体现出的两个独立且无关的特点是什么？" class="headerlink" title="在进程概念中体现出的两个独立且无关的特点是什么？"></a>在进程概念中体现出的两个独立且无关的特点是什么？</h3><ul>
@@ -463,6 +503,8 @@
 <p>强信号灯，队列为FIFO，唤醒顺序依照先来先唤醒</p>
 <p>弱信号灯 无特定的顺序</p>
 <h3 id="什么是管程"><a href="#什么是管程" class="headerlink" title="什么是管程"></a>什么是管程</h3><p>与信号灯提供等效的功能并且易于操作。管程可以被看作是包含了多个函数，一个初始化过程，以及本地数据的软件模块</p>
+<img src="/2020/08/23/Operating-System/5.4.1.JPG" class title="computer architecture">
+
 <p><img src="/2020/08/23/Operating-System/Operating-System%5C5.4.1.JPG" alt></p>
 <h3 id="消息的阻塞与非阻塞有什么区别"><a href="#消息的阻塞与非阻塞有什么区别" class="headerlink" title="消息的阻塞与非阻塞有什么区别"></a>消息的阻塞与非阻塞有什么区别</h3><p>发送者和接收者任一方阻塞则消息传递需要等待，都无阻塞则不需等待。</p>
 <h3 id="通常与读者-写者问题相关联的有哪些条件？"><a href="#通常与读者-写者问题相关联的有哪些条件？" class="headerlink" title="通常与读者-写者问题相关联的有哪些条件？"></a>通常与读者-写者问题相关联的有哪些条件？</h3><ul>
