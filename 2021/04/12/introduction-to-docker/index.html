@@ -11,7 +11,7 @@
    
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    the process of compile |  Xiaohu&#39;s Blog
+    introduction to docker |  Xiaohu&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -35,7 +35,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-the-process-of-compile" class="article article-type-post" itemscope
+  <article id="post-introduction-to-docker" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -43,7 +43,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  the process of compile
+  introduction to docker
 </h1>
  
 
@@ -52,14 +52,10 @@
 
     
     <div class="article-meta">
-      <a href="/2020/06/20/the-process-of-compile/" class="article-date">
-  <time datetime="2020-06-20T13:57:53.000Z" itemprop="datePublished">2020-06-20</time>
+      <a href="/2021/04/12/introduction-to-docker/" class="article-date">
+  <time datetime="2021-04-12T10:35:22.000Z" itemprop="datePublished">2021-04-12</time>
 </a>
       
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/CSAPP/">CSAPP</a>
-  </div>
-
       
       
 <div class="word_count">
@@ -67,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">818字</span>
+            <span class="post-count">711字</span>
         </span>
     </span>
 
@@ -101,47 +97,43 @@
       
 
       
-      <h1 id="1-c程序的编译过程"><a href="#1-c程序的编译过程" class="headerlink" title="1. c程序的编译过程"></a>1. c程序的编译过程</h1><p>[TOC]</p>
-<h2 id="1-1-Overview"><a href="#1-1-Overview" class="headerlink" title="1.1. Overview"></a>1.1. Overview</h2><p>计算机语言可以分为机器语言，汇编语言，高级语言三种</p>
-<ul>
-<li>机器语言：顾名思义，机器语言是一系列二进制所组成的文件。可以直接被硬件所执行。</li>
-<li>汇编语言 汇编语言是处于机器语言与高级语言中间的一层。他的抽象程度比机器语言高，但是却比高级语言要低。</li>
-<li>高级语言 抽象层次比较高，方便阅读</li>
-</ul>
+      <h2 id="container-VS-virtual-machine"><a href="#container-VS-virtual-machine" class="headerlink" title="container VS virtual machine"></a>container VS virtual machine</h2><p>容器与虚拟机一样，终极目的都是为了提高计算资源的使用效率，同时提供应用一个独立的运行单元。</p>
 <a id="more"></a>
 
-<h2 id="1-2-安装GCC编译器"><a href="#1-2-安装GCC编译器" class="headerlink" title="1.2. 安装GCC编译器"></a>1.2. 安装GCC编译器</h2><p>我们在下面过程中使用的gcc编译器属于GNU项目的一部分。GNU项目最初的目的是为了开发一个完整的类似于Unix的系统。<br>GNU项目包括了EMACS编辑器，GCC编译器 GDB调试器 汇编器，链接器，等等。GNU环境与我们所熟知的linux内核一起组成了我们熟悉的linux。<br>windows下安装GCC <a href="https://www.jianshu.com/p/ff24a81f3637" target="_blank" rel="noopener">https://www.jianshu.com/p/ff24a81f3637</a> <br>Linux 下安装GCC <a href="https://www.linuxidc.com/Linux/2019-06/159059.htm" target="_blank" rel="noopener">https://www.linuxidc.com/Linux/2019-06/159059.htm</a></p>
-<h2 id="1-3-编译过程"><a href="#1-3-编译过程" class="headerlink" title="1.3. 编译过程"></a>1.3. 编译过程</h2><img src="/2020/06/20/the-process-of-compile/compile.jpg" class title="compile system">
+<p>容器与虚拟机的区别，从他们的架构图中我们可以轻而易举地看出不同来</p>
+<p><img src="/2021/04/12/introduction-to-docker/introduction-to-docker%5C1.jpg" alt></p>
+<img src="/2021/04/12/introduction-to-docker/1.jpg" class title="computer architecture">
 
-<p>程序的编译过程通常有可以分为以下四个步骤，我们会以helloworld作为例子来向大家展示</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">include &lt;stdio.h&gt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello world"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
+<p>虚拟机实际上拥有自己完整的OS，在设计之初，为了消除对于底层硬件的依赖，我们在 OS 与 底层硬件之间再进行一层抽象，抽象出单独的一层hypervisor。hypervisor使得一台真正的物理机可以在在某种程度上被切分更小的部分，并且切分后不同的虚拟机之间可以运行不同的OS，互相不会被干扰。相比较容器来说，由于每个虚拟机都有自己独立的OS内核，理论上不同虚拟机之间的应用是严格隔离的。但是由于硬件虚拟化的过程中会有一部分性能损失，毕竟你要牺牲一部分的算力来执行硬件虚拟化的过程。</p>
+<p>容器相较与虚拟机来说是一种更加轻量化的虚拟化形式。容器通过Cgroup + Namespace实现资源控制与访问隔离。同时同一台物理机上的进程都共享同一个OS，因此隔离程度没有虚拟机那么强。但是好处就是容器的启动与切换速度更快，同时容器基本没有虚拟化过程中的性能损失。</p>
+<h2 id="docker安装指南"><a href="#docker安装指南" class="headerlink" title="docker安装指南"></a>docker安装指南</h2><p>官网的详细安装指南可以参考这里<a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">https://docs.docker.com/get-docker/</a></p>
+<p>中文版 <a href="https://vuepress.mirror.docker-practice.com/install/ubuntu/#%E4%BD%BF%E7%94%A8-apt-%E5%AE%89%E8%A3%85" target="_blank" rel="noopener">https://vuepress.mirror.docker-practice.com/install/ubuntu/#%E4%BD%BF%E7%94%A8-apt-%E5%AE%89%E8%A3%85</a></p>
+<p>这里以Ubuntu 20.04为例，展示一下安装步骤。</p>
+<ul>
+<li>移除旧版本docker</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove docker docker-engine docker.io containerd runc</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>预处理阶段</p>
-<p>预处理器(cpp) 根据以#开头的字符来修改原始的C程序，主要会有以下的处理过程</p>
+<li>设置仓库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">   apt-transport-https \</span><br><span class="line">   ca-certificates \</span><br><span class="line">   curl \</span><br><span class="line">   gnupg \</span><br><span class="line">   lsb-release</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>删除#define，展开相应的宏定义。处理一些预编译指令</li>
-<li>处理广为人知的#include指令。如上面所示，这里会将读取#include &lt;stdio.h&gt; ，告诉预处理器来读取系统的stdio.h头文件，并且将其直接插入到程序中进行扩展</li>
-<li>删除注释，添加行号与文件标注</li>
-</ul>
+<li><p>添加官方GPG key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu&#x2F;gpg | sudo gpg --dearmor -o &#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;docker-archive-keyring.gpg</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>编译阶段</p>
-<p>编译器将文件hello.i 翻译为hello.s ，进一步地它包含了一个汇编语言程序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">	.file	&quot;hello.c&quot;</span><br><span class="line">	.text</span><br><span class="line">	.section	.rodata</span><br><span class="line">.LC0:</span><br><span class="line">	.string	&quot;Hello world&quot;</span><br><span class="line">	.text</span><br><span class="line">	.globl	main</span><br><span class="line">	.type	main, @function</span><br><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	leaq	.LC0(%rip), %rdi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	printf@PLT</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	popq	%rbp</span><br><span class="line">	.cfi_def_cfa 7, 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br><span class="line">.LFE0:</span><br><span class="line">	.size	main, .-main</span><br><span class="line">	.ident	&quot;GCC: (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0&quot;</span><br><span class="line">	.section	.note.GNU-stack,&quot;&quot;,@progbits</span><br></pre></td></tr></table></figure>
-
-<p>其中主要被机器所识别的部分是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">.LFB0:</span><br><span class="line">	.cfi_startproc</span><br><span class="line">	pushq	%rbp</span><br><span class="line">	.cfi_def_cfa_offset 16</span><br><span class="line">	.cfi_offset 6, -16</span><br><span class="line">	movq	%rsp, %rbp</span><br><span class="line">	.cfi_def_cfa_register 6</span><br><span class="line">	leaq	.LC0(%rip), %rdi</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	call	printf@PLT</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">	popq	%rbp</span><br><span class="line">	.cfi_def_cfa 7, 8</span><br><span class="line">	ret</span><br><span class="line">	.cfi_endproc</span><br></pre></td></tr></table></figure>
-
-<p>大家可能会疑惑了，为什么从高级语言跳转到机器语言呢，这样中间省略了一部分不是会让程序的运行速度更快么？实际上这里采用汇编语言作为中间层可以向上兼容许多不同的高级语言如同C++，Java等。这些高级语言经过不同的编译器后实际上会输出相同的汇编语言。</p>
+<li><p>安装docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>汇编阶段</p>
-<p>汇编器将hello.s 翻译为机器语言。由于每条机器指令几乎都对应了相应的汇编指令，因此我们可以通过类似查字典的方式将它逐条翻译为机器指令。通过一种可重定位目标程序（relocatable object program）的格式打包在一起，最终将结果存在hello.o</p>
+<li><p>确认安装完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>链接阶段</p>
+<li><p>有类似如下信息输出，则可以表示安装成功</p>
 </li>
 </ul>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</span><br><span class="line">    (amd64)</span><br><span class="line"> 3. The Docker daemon created a new container from that image which runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https:&#x2F;&#x2F;hub.docker.com&#x2F;</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https:&#x2F;&#x2F;docs.docker.com&#x2F;get-started&#x2F;</span><br></pre></td></tr></table></figure>
+
 
       
       <!-- reward -->
@@ -211,13 +203,15 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fengxiaohu.github.io/2020/06/20/the-process-of-compile/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fengxiaohu.github.io/2021/04/12/introduction-to-docker/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
 
     </footer>
 
@@ -227,19 +221,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/07/22/linear-table/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            linear table
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/04/30/Leetcode-169-Majority-Element/" class="article-nav-link">
+      <a href="/2020/08/23/Operating-System/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Leetcode-169-Majority-Element</div>
+        <div class="article-nav-title">Operating-System</div>
       </a>
     
   </nav>
