@@ -11,7 +11,7 @@
    
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    introduction to docker |  Xiaohu&#39;s Blog
+    setup docker image |  Xiaohu&#39;s Blog
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -35,7 +35,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-introduction-to-docker" class="article article-type-post" itemscope
+  <article id="post-setup-docker-image" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -43,7 +43,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  introduction to docker
+  setup docker image
 </h1>
  
 
@@ -52,8 +52,8 @@
 
     
     <div class="article-meta">
-      <a href="/2021/04/12/introduction-to-docker/" class="article-date">
-  <time datetime="2021-04-12T10:35:22.000Z" itemprop="datePublished">2021-04-12</time>
+      <a href="/2021/04/14/setup-docker-image/" class="article-date">
+  <time datetime="2021-04-13T17:04:47.000Z" itemprop="datePublished">2021-04-14</time>
 </a>
       
       
@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">711字</span>
+            <span class="post-count">1.3k字</span>
         </span>
     </span>
 
@@ -72,7 +72,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">5分钟</span>
         </span>
     </span>
 </div>
@@ -97,42 +97,47 @@
       
 
       
-      <h2 id="container-VS-virtual-machine"><a href="#container-VS-virtual-machine" class="headerlink" title="container VS virtual machine"></a>container VS virtual machine</h2><p>容器与虚拟机一样，终极目的都是为了提高计算资源的使用效率，同时提供应用一个独立的运行单元。</p>
+      <h2 id="什么是镜像"><a href="#什么是镜像" class="headerlink" title="什么是镜像"></a>什么是镜像</h2><p>在官方文档中，容器镜像是一段只读的模板，模板中包含的指令可以创造容器。</p>
 <a id="more"></a>
 
-<p>容器与虚拟机的区别，从他们的架构图中我们可以轻而易举地看出不同来</p>
-<p><img src="/2021/04/12/introduction-to-docker/introduction-to-docker%5C1.jpg" alt></p>
-<img src="/2021/04/12/introduction-to-docker/1.jpg" class title="computer architecture">
+<p>这么说有点抽象，实际上容器的i镜像可以类比虚拟机创建时候的镜像。Docker 镜像 是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像 不包含 任何动态数据，其内容在构建之后也不会被改变。而虚拟机的镜像实际上是包含了一个完整的操作系统在里面，所以虚拟机的镜像一般来说都比docker镜像体积大很多。</p>
+<p>docker镜像拥有高度可定制化的自由。通俗来说你可以在官方的docker hub上拉取一个Ubuntu镜像，运行此容器并配置好你的开发环境之后，你可以将其打包出去，并发布到自己的镜像仓库中来供同一个team使用。</p>
+<h2 id="什么是容器"><a href="#什么是容器" class="headerlink" title="什么是容器"></a>什么是容器</h2><p>容器就是一个镜像在成功运行后的实例。容器与镜像的关系有点类似于代码与程序之间的关系。代码是一段静态的文本，而程序是代码在执行过程中的一个实例。容器之间天然具有一定的隔离性。</p>
+<p>若某个容器在执行系统调用时导致内核崩溃，由于这些容器共用的是同一个操作系统内核，那么运行在同一台物理机下面的其他容器也会停止运行。</p>
+<h2 id="Docker-镜像构建"><a href="#Docker-镜像构建" class="headerlink" title="Docker 镜像构建"></a>Docker 镜像构建</h2><p>官方获取docker镜像的地址在这里 <a href="https://hub.docker.com/search?q=&amp;type=image&amp;image_filter=official" target="_blank" rel="noopener">https://hub.docker.com/search?q=&amp;type=image&amp;image_filter=official</a></p>
+<p>通过官方获取的镜像会保证其安全性。</p>
+<p>在理解你在本地电脑上如何拉取镜像之前，让我们先来看看docker架构</p>
+<p><img src="/2021/04/14/setup-docker-image/hexo/source/_posts/make-docker-image-and-use-docker-container/1.jpg" alt></p>
+<img src="/2021/04/14/setup-docker-image/1.jpg" class title="docker architecture">
 
-<p>虚拟机实际上拥有自己完整的OS，在设计之初，为了消除对于底层硬件的依赖，我们在 OS 与 底层硬件之间再进行一层抽象，抽象出单独的一层hypervisor。hypervisor使得一台真正的物理机可以在在某种程度上被切分更小的部分，并且切分后不同的虚拟机之间可以运行不同的OS，互相不会被干扰。相比较容器来说，由于每个虚拟机都有自己独立的OS内核，理论上不同虚拟机之间的应用是严格隔离的。但是由于硬件虚拟化的过程中会有一部分性能损失，毕竟你要牺牲一部分的算力来执行硬件虚拟化的过程。</p>
-<p>容器相较与虚拟机来说是一种更加轻量化的虚拟化形式。容器通过Cgroup + Namespace实现资源控制与访问隔离。同时同一台物理机上的进程都共享同一个OS，因此隔离程度没有虚拟机那么强。但是好处就是容器的启动与切换速度更快，同时容器基本没有虚拟化过程中的性能损失。</p>
-<h2 id="docker安装指南"><a href="#docker安装指南" class="headerlink" title="docker安装指南"></a>docker安装指南</h2><p>官网的详细安装指南可以参考这里<a href="https://docs.docker.com/get-docker/" target="_blank" rel="noopener">https://docs.docker.com/get-docker/</a></p>
-<p>中文版 <a href="https://vuepress.mirror.docker-practice.com/install/ubuntu/#%E4%BD%BF%E7%94%A8-apt-%E5%AE%89%E8%A3%85" target="_blank" rel="noopener">https://vuepress.mirror.docker-practice.com/install/ubuntu/#%E4%BD%BF%E7%94%A8-apt-%E5%AE%89%E8%A3%85</a></p>
-<p>这里以Ubuntu 20.04为例，展示一下安装步骤。</p>
+<p>这是一个典型的client-server 架构，client端通过docker daemon来与server端通信。</p>
+<p>在官方的docker hub中获得镜像的命令是docker pull，具体使用格式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]</span><br></pre></td></tr></table></figure>
+
+<p>通常拉取一个镜像我们通过三元组来定位目标镜像，即[仓库地址:用户名:标签],</p>
 <ul>
-<li>移除旧版本docker</li>
+<li>仓库地址 默认为Docker Hub ，若有需求使用私人构建的镜像仓库时，可以配置使用</li>
+<li>用户名 默认为library</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove docker docker-engine docker.io containerd runc</span><br></pre></td></tr></table></figure>
+<p>例如我们拉取一个官方的redis镜像，最后实际上给出了redis镜像在docker服务器端完整路径。docker.io/library/redis:latest</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@xh-Ubuntu:&#x2F;home&#x2F;xh&#x2F;mynginx# docker pull redis</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library&#x2F;redis</span><br><span class="line">Digest: sha256:08e282682a708eb7f51b473516be222fff0251cdee5ef8f99f4441a795c335b6</span><br><span class="line">Status: Image is up to date for redis:latest</span><br><span class="line">docker.io&#x2F;library&#x2F;redis:latest</span><br></pre></td></tr></table></figure>
+
+<h2 id="定制自己的镜像"><a href="#定制自己的镜像" class="headerlink" title="定制自己的镜像"></a>定制自己的镜像</h2><p>定制镜像是通过Dockerfile来完成的，举例来说。首先创建一个空白目录，然后建立一个文件并且命名为Dockerfile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mynginx</span><br><span class="line">$ cd mynginx</span><br><span class="line">$ vim Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p>Dockerflle 文件中可填写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx</span><br><span class="line">RUN echo &#39;&lt;h1&gt;Hello, Docker!&lt;&#x2F;h1&gt;&#39; &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>设置仓库</li>
+<li>from 指定了我们这个定制的镜像所依赖的基础镜像</li>
+<li>run 命令则体验了我们所做的定制化的改动。通常是用来执行命令行的命令的</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install \</span><br><span class="line">   apt-transport-https \</span><br><span class="line">   ca-certificates \</span><br><span class="line">   curl \</span><br><span class="line">   gnupg \</span><br><span class="line">   lsb-release</span><br></pre></td></tr></table></figure>
+<p>构建镜像</p>
+<p>构建镜像我们使用docker build 命令，用法可以参考</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">Usage:  docker build [OPTIONS] PATH | URL | -</span><br><span class="line"></span><br><span class="line">Build an image from a Dockerfile</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --add-host list           Add a custom host-to-IP mapping (host:ip)</span><br><span class="line">      --build-arg list          Set build-time variables</span><br><span class="line">      --cache-from strings      Images to consider as cache sources</span><br><span class="line">      --cgroup-parent string    Optional parent cgroup for the container</span><br><span class="line">      --compress                Compress the build context using gzip</span><br><span class="line">      --cpu-period int          Limit the CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int           Limit the CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">  -c, --cpu-shares int          CPU shares (relative weight)</span><br><span class="line">      --cpuset-cpus string      CPUs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string      MEMs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --disable-content-trust   Skip image verification (default true)</span><br><span class="line">  -f, --file string             Name of the Dockerfile (Default is &#39;PATH&#x2F;Dockerfile&#39;)</span><br><span class="line">      --force-rm                Always remove intermediate containers</span><br><span class="line">      --iidfile string          Write the image ID to the file</span><br><span class="line">      --isolation string        Container isolation technology</span><br><span class="line">      --label list              Set metadata for an image</span><br><span class="line">  -m, --memory bytes            Memory limit</span><br><span class="line">      --memory-swap bytes       Swap limit equal to memory plus swap: &#39;-1&#39; to enable unlimited swap</span><br><span class="line">      --network string          Set the networking mode for the RUN instructions during build (default &quot;default&quot;)</span><br><span class="line">      --no-cache                Do not use cache when building the image</span><br><span class="line">      --pull                    Always attempt to pull a newer version of the image</span><br><span class="line">  -q, --quiet                   Suppress the build output and print image ID on success</span><br><span class="line">      --rm                      Remove intermediate containers after a successful build (default true)</span><br><span class="line">      --security-opt strings    Security options</span><br><span class="line">      --shm-size bytes          Size of &#x2F;dev&#x2F;shm</span><br><span class="line">  -t, --tag list                Name and optionally a tag in the &#39;name:tag&#39; format</span><br><span class="line">      --target string           Set the target build stage to build.</span><br><span class="line">      --ulimit ulimit           Ulimit options (default [])</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><p>添加官方GPG key</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu&#x2F;gpg | sudo gpg --dearmor -o &#x2F;usr&#x2F;share&#x2F;keyrings&#x2F;docker-archive-keyring.gpg</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装docker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>确认安装完成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>有类似如下信息输出，则可以表示安装成功</p>
-</li>
-</ul>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</span><br><span class="line">    (amd64)</span><br><span class="line"> 3. The Docker daemon created a new container from that image which runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https:&#x2F;&#x2F;hub.docker.com&#x2F;</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https:&#x2F;&#x2F;docs.docker.com&#x2F;get-started&#x2F;</span><br></pre></td></tr></table></figure>
+<p>这里-t表示我们build生成的镜像名称为nginx:v3，后面的PATH  参数为 <strong>.</strong>  代表当前目录。这里的path参数代表了上下文路径，也就是在server端的相对路径。通过上面的架构图我们可以得知，docker build 命令通过RESTAPI 在server端进行构建，那么构建的过程中我们不可避免的要加入我们自己的文件。path为当前目录时，docker build 会打包当前路径下的所有文件，然后上传给server进行构建docker镜像。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t nginx:v3 .</span><br></pre></td></tr></table></figure>
 
 
       
@@ -203,7 +208,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fengxiaohu.github.io/2021/04/12/introduction-to-docker/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://fengxiaohu.github.io/2021/04/14/setup-docker-image/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -221,19 +226,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2021/04/14/setup-docker-image/" class="article-nav-link">
+      <a href="/2021/04/16/docker-data-management/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            setup docker image
+            docker data management
           
         </div>
       </a>
     
     
-      <a href="/2020/08/23/Operating-System/" class="article-nav-link">
+      <a href="/2021/04/12/introduction-to-docker/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">Operating-System</div>
+        <div class="article-nav-title">introduction to docker</div>
       </a>
     
   </nav>
